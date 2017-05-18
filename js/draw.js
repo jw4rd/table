@@ -22,12 +22,12 @@ function draw(){
 	ctx.fillStyle="rgba(210,185,160,0.8)"
 	//ctx.fillStyle="#fff"
 
-
 	//ctx.rect(ctx.canvas.width/2-18,ctx.canvas.height/2-18,36,36)
 	//ctx.fill()
 	//ctx.stroke()
 
 	/*
+
 	for(i=0;i<part.length;i++){
 
 		//console.log(part[i].depth)
@@ -40,16 +40,9 @@ function draw(){
 			ctx.rect(ctx.canvas.width/2-(part[i].width/2)*sf2,ctx.canvas.height/2-(part[i].height/2)*sf2,part[i].width*sf2,part[i].height*sf2)
 		}
 
-
 	}
+
 	*/
-
-	//top
-	//ctx.rect(ctx.canvas.width/2-(table.width/2)*sf2,ctx.canvas.height/2-(table.depth/2)*sf2,table.width*sf2,table.depth*sf2)
-	//ctx.rect(ctx.canvas.width/2-(table.width/2)*sf2,ctx.canvas.height/2-(table.depth/2)*sf2,table.width*sf2,table.depth*sf2)
-	//leg
-
-	//ctx.moveTo(ctx.canvas.width/2,ctx.canvas.height/2)
 
 	space=1
 
@@ -58,9 +51,9 @@ function draw(){
 	ctx.lineWidth=0.5	
 
 	ctx.strokeStyle="#000"
-	//ctx.fillStyle="rgb(210,185,160)"
-	//ctx.fillStyle="rgb(210,185,160)"
 
+	//ctx.fillStyle="rgb(210,185,160)"
+	//ctx.fillStyle="rgb(210,185,160)"
 
 	ctx.beginPath()
 
@@ -71,15 +64,16 @@ function draw(){
 
 	ctx.fill()
 	ctx.stroke()
-
 	
 	for(i=0;i<tableTop.pockets.length;i++){
+
 		ctx.beginPath()
 		for(j=0;j<tableTop.pockets[i].length;j++){
 			ctx.lineTo(tableTop.pockets[i][j].X*sf2,tableTop.pockets[i][j].Y*sf2)
 		}
 		ctx.lineTo(tableTop.pockets[i][0].X*sf2,tableTop.pockets[i][0].Y*sf2)
 		ctx.stroke()
+
 	}
 
 	//front support
@@ -119,12 +113,10 @@ function draw(){
 		}
 	}
 
-
 	ctx.fill()
 	ctx.stroke()
 
 	//leg1
-
 
 	ctx.beginPath()
 	for(i=0;i<tableLeg1.cutout.length;i++){
@@ -160,14 +152,10 @@ function draw(){
 		ctx.lineTo((tableLeg2.holes[i][0].X+table.width/2+table.legWidth*2+space)*sf2,tableLeg2.holes[i][0].Y*sf2)
 	}
 
-
 	ctx.fill()
 	ctx.stroke()
 
-
 	//foot1	
-
-	
 
 	ctx.beginPath()
 	for(i=0;i<tableFoot1.cutout.length;i++){
@@ -208,26 +196,33 @@ function draw(){
 
 	//ctx.fillStyle="#0000ff"
 
-	/*
+	//shelf
 
 	ctx.beginPath()
+
 	for(i=0;i<tableShelf.cutout.length;i++){
-		ctx.lineTo(tableShelf.cutout[i].X*sf2,(tableShelf.cutout[i].Y)*sf2)
+		ctx.lineTo(tableShelf.cutout[i].X*sf2,(tableShelf.cutout[i].Y-table.depth+table.overHang+(thickness/2))*sf2)
 	}
-	ctx.lineTo(tableShelf.cutout[0].X*sf2,(tableShelf.cutout[0].Y)*sf2)
+	ctx.lineTo(tableShelf.cutout[0].X*sf2,(tableShelf.cutout[0].Y-table.depth+table.overHang+(thickness/2))*sf2)
 	ctx.stroke()
 	ctx.fill()
 
+	//block
 
 	ctx.beginPath()
 	for(i=0;i<tableShelfBlock.cutout.length;i++){
-		ctx.lineTo(tableShelfBlock.cutout[i].X*sf2,(tableShelfBlock.cutout[i].Y)*sf2)
+		ctx.lineTo((tableShelfBlock.cutout[i].X+table.width/2)*sf2,(tableShelfBlock.cutout[i].Y-(table.depth/2)-2)*sf2)
 	}
-	ctx.lineTo(tableShelfBlock.cutout[0].X*sf2,(tableShelfBlock.cutout[0].Y)*sf2)
+	ctx.lineTo((tableShelfBlock.cutout[0].X+table.width/2)*sf2,(tableShelfBlock.cutout[0].Y-(table.depth/2)-2)*sf2)
+
+	ctx.moveTo((tableShelfBlock.holes[0][0].X+table.width/2)*sf2,(tableShelfBlock.holes[0][0].Y-(table.depth/2)-2)*sf2)
+	for(i=0;i<tableShelfBlock.holes[0].length;i++){
+		ctx.lineTo((tableShelfBlock.holes[0][i].X+table.width/2)*sf2,(tableShelfBlock.holes[0][i].Y-(table.depth/2)-2)*sf2)
+	}
+	ctx.lineTo((tableShelfBlock.holes[0][0].X+table.width/2)*sf2,(tableShelfBlock.holes[0][0].Y-(table.depth/2)-2)*sf2)
+
 	ctx.stroke()
 	ctx.fill()
-
-	*/
 
 	//points
 

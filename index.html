@@ -96,6 +96,7 @@ input[type="checkbox"] {
 
 
 <div id="parameters" style="top:10px;left:10px">
+
 TABLE<br>
 
 &emsp;<select id="size" autocomplete="off">
@@ -135,20 +136,8 @@ TABLE<br>
 &emsp;&emsp;<input id='radius' type="number" value="1" step="0.0625" autocomplete="off"/><br>
 
 &emsp;top edge overhang<br>
-&emsp;&emsp;<input id='overhang' type="number" value="2" step="0.0625" autocomplete="off"/><br>
+&emsp;&emsp;<input id='overhang' type="number" value="2" min="0" step="0.0625" autocomplete="off"/><br>
 
-
-
-<!--
-
------------------------<br>
-
-&emsp;tool diameter<br>
-&emsp;&emsp;<input id='radius' type="number" value="0.25" step="0.125" autocomplete="off"/><br>
-
-
-IMAGES
--->
 <p>
 &emsp;BOM<br>
 &emsp;&emsp;<a title="16 per table 4 per shelf" href="https://www.mcmaster.com/#90910A543">screws</a><br>
@@ -160,7 +149,7 @@ IMAGES
 
 <div id="notes">
 &emsp;note:<br>
-&emsp;&emsp;height does not include caster height (2-3/4")
+&emsp;&emsp;height does not include caster height (2-3/4")<br>
 
 
 </div>
@@ -552,6 +541,10 @@ function loadParts(){
 	tableFoot1={cutout:[],holes:[],pockets:[]}
 	tableFoot2={cutout:[],holes:[],pockets:[]}
 
+
+	tableShelf={cutout:[],holes:[],pockets:[]}
+	tableShelfBlock={cutout:[],holes:[],pockets:[]}
+
 	n=100
 		
 	for(i=n;i>=0;i--){
@@ -869,16 +862,25 @@ function loadParts(){
 		tableFoot1.holes=[tableFoot2.holes]
 		tableFoot2.holes=[tableFoot2.holes]	
 
-		tableShelf.cutout.push({X:-(table.depth/2)+table.overHang+(thickness*2),Y:-(table.depth/2)+table.overHang+(thickness*2)})
-		tableShelf.cutout.push({X:-(table.depth/2)+table.overHang+(thickness*2),Y:(table.depth/2)-table.overHang-(thickness*2)})
-		tableShelf.cutout.push({X:(table.depth/2)-table.overHang-(thickness*2),Y:(table.depth/2)-table.overHang-(thickness*2)})
-		tableShelf.cutout.push({X:(table.depth/2)-table.overHang-(thickness*2),Y:-(table.depth/2)+table.overHang+(thickness*2)})
+		tableShelf.cutout.push({X:-(table.width/2)+table.overHang+(thickness*2),Y:-(table.depth/2)+table.overHang+(thickness*2)})
+		tableShelf.cutout.push({X:-(table.width/2)+table.overHang+(thickness*2),Y:(table.depth/2)-table.overHang-(thickness*2)})
+		tableShelf.cutout.push({X:(table.width/2)-table.overHang-(thickness*2),Y:(table.depth/2)-table.overHang-(thickness*2)})
+		tableShelf.cutout.push({X:(table.width/2)-table.overHang-(thickness*2),Y:-(table.depth/2)+table.overHang+(thickness*2)})
 
 
-		tableShelfBlock.cutout.push({X:-1,Y:-1})
-		tableShelfBlock.cutout.push({X:-1,Y:1})
-		tableShelfBlock.cutout.push({X:1,Y:1})
-		tableShelfBlock.cutout.push({X:1,Y:-1})
+		tableShelfBlock.cutout.push({X:-table.legWidth/4,Y:-1})
+		tableShelfBlock.cutout.push({X:-table.legWidth/4,Y:1})
+		tableShelfBlock.cutout.push({X:table.legWidth/4,Y:1})
+
+		tableShelfBlock.cutout.push({X:table.legWidth/4,Y:0})
+		tableShelfBlock.cutout.push({X:table.legWidth/4-thickness,Y:0})
+		tableShelfBlock.cutout.push({X:table.legWidth/4-thickness,Y:-1})
+
+
+		tableShelfBlock.holes.push([])
+		for(i=n;i>=0;i--){
+			tableShelfBlock.holes[tableShelfBlock.holes.length-1].push({X:(0)+Math.sin(((Math.PI*2)/n*i))*0.155,Y:(0)+Math.cos(((Math.PI*2)/n*i))*0.155})
+		}
 
 	draw()
 
