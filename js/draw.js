@@ -14,11 +14,10 @@ function draw(){
 
 	if(document.getElementById('2D').checked==true){
 
-	ctx.fillStyle="rgba(255,255,255,0)"
-	//ctx.fillStyle="#fff"
+	//ctx.fillStyle="rgba(255,255,255,0)"
+	ctx.fillStyle="#fff"
 	ctx.fillRect(0,0,ctx.canvas.width,ctx.canvas.height)
 
-	//ctx.strokeStyle="#000"
 	ctx.fillStyle="rgba(210,185,160,0.8)"
 	//ctx.fillStyle="#fff"
 

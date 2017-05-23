@@ -174,11 +174,22 @@ TABLE<br>
 	<input class="button" type="submit" value="make" style="height:80px;" onclick="make()"/><p>
 </div>
 
-
-
 <script>
 
+
 //TODO
+//
+//
+//
+//shelf 3d
+//shelf pockets
+//check clearance top pockets
+//pics
+//
+//
+//
+
+
 //
 //dogbones
 //fillets
@@ -315,7 +326,6 @@ var chamfer2 = 0
 var polygons = []
 var offset = []
 
-
 //
 
 var height 
@@ -355,15 +365,11 @@ function render() {
 	if(Math.abs(r)>=2*Math.PI){
 		r=0
 	}
-
-
 	
 	for(i=0;i<scene.children.length;i++){
 		scene.children[i].rotation.y=r
 
 	}
-
-
 
 	renderer.render(scene, camera)
  
@@ -386,16 +392,11 @@ function translate(o,x,y,z){
 }
 
 
-
-
 function updateAll(){
-
-
 
 	while (scene.children.length > 0) {
             scene.remove(scene.children[scene.children.length - 1])
 	}
-
 
 	//plane
 	geometry = new THREE.PlaneGeometry( 480, 480, 32 )
@@ -479,9 +480,6 @@ function updateAll(){
 render()
 
 
-
-
-
 function scale(s){
 
 	for(i=0;i<scene.children.length;i++){
@@ -519,18 +517,15 @@ $("body").on('mousewheel',function(e){
 	draw()
 })
 
-//loadParts()
-
 function loadParts(){
 
 	if(custom==true){
 		$("#size").val("custom")
 	}
 
+	clearance = 0 //0.002
+	pocketClearance = 0.02 //0.01
 
-	clearance =0//0.002
-	pocketClearance = 0.01//0.01
-	//console.log(thickness)
 	fillet=0.05
 
 	tableTop={cutout:[],holes:[],pockets:[]}
@@ -717,15 +712,18 @@ function loadParts(){
 				tableLeg1.cutout.push({X:table.legWidth/2+thickness,Y:table.height/2-(table.height*(i/7))-clearance,fillet:fillet})
 			}
 		}
+
 		tableLeg1.cutout.push({X:table.legWidth/2+thickness,Y:-table.height/2+thickness+0.125})
 		tableLeg1.cutout.push({X:-table.legWidth/2,Y:-table.height/2+thickness+0.125,fillet:fillet})
 		tableLeg1.cutout.push({X:-table.legWidth/2,Y:-table.height/2+5})
 
 		tableLeg1.holes.push([])
+
 		for(i=n;i>=0;i--){
 			tableLeg1.holes[tableLeg1.holes.length-1].push({X:(-table.legWidth/2+1)+Math.sin(((Math.PI*2)/n*i))*0.155,Y:(-table.height/2+thickness+table.supportWidth*0.75)+Math.cos(((Math.PI*2)/n*i))*0.155})
 		}
 		tableLeg1.holes.push([])
+
 		for(i=n;i>=0;i--){
 			tableLeg1.holes[tableLeg1.holes.length-1].push({X:(table.legWidth/2-1)+Math.sin(((Math.PI*2)/n*i))*0.155,Y:(-table.height/2+thickness+table.supportWidth*0.25)+Math.cos(((Math.PI*2)/n*i))*0.155})
 		}
@@ -768,7 +766,9 @@ function loadParts(){
 		tableLeg2.cutout.push({X:table.legWidth/2,Y:-table.height/2+5})
 		tableLeg2.cutout.push({X:table.legWidth/2,Y:-table.height/2+thickness+0.125})
 		tableLeg2.cutout.push({X:-table.legWidth/2,Y:-table.height/2+thickness+0.125})
+
 		//
+
 		for(i=1;i<7;i++){
 			if(i%2==1){
 				tableLeg2.cutout.push({X:-table.legWidth/2,Y:-table.height/2+(table.height*(i/7)),dogbone:true})
@@ -828,10 +828,10 @@ function loadParts(){
 			tableFoot1.cutout.push({X:(0)+Math.sin(((Math.PI/2)/n*i)+Math.PI)*table.legWidth/4,Y:(0)+Math.cos(((Math.PI/2)/n*i)+Math.PI)*table.legWidth/4})
 		}
 
-
 		tableFoot1.cutout.push({X:table.legWidth/4,Y:-table.legWidth/4})
 
 		//foot2
+
 		for(i=0;i<tableFoot1.cutout.length;i++){
 			tableFoot2.cutout.push(tableFoot1.cutout[i])
 		}
@@ -922,6 +922,7 @@ function makePart(part,type){
 	shape = new THREE.Shape()
 
 	shape.moveTo(part.cutout[0].X*10,part.cutout[0].Y*10)
+
 	for(i=1;i<part.cutout.length;i++){
 	shape.lineTo(part.cutout[i].X*10,part.cutout[i].Y*10)
 	}
@@ -1036,8 +1037,6 @@ function makePart(part,type){
 			translate(pocket7WF,0,table.height*10-thickness*5,0)	
 			scene.add( pocket7WF )
 		}
-
-
 		
 	}
 
@@ -1165,10 +1164,6 @@ function makePart(part,type){
 		scene.add( leg2 )
 	}
 
-
-
-
-
 	else if(type=="foot1"){
 		foot1WF = new THREE.LineSegments(geometry,lineMaterial)
 		foot1 = new THREE.Mesh( extrude, materials )
@@ -1216,7 +1211,9 @@ function makePart(part,type){
 		scene.add( foot1WF )
 		scene.add( foot1 )
 	}
+
 	else if(type=="foot1.4"){
+
 		foot1WF = new THREE.LineSegments(geometry,lineMaterial)
 		foot1 = new THREE.Mesh( extrude, materials )
 
@@ -1234,6 +1231,7 @@ function makePart(part,type){
 	}
 
 	else if(type=="foot2"){
+
 		foot2WF = new THREE.LineSegments(geometry,lineMaterial)
 		foot2 = new THREE.Mesh(extrude,materials)
 
@@ -1249,6 +1247,7 @@ function makePart(part,type){
 	}
 
 	else if(type=="foot2.2"){
+
 		foot2WF = new THREE.LineSegments(geometry,lineMaterial)
 		foot2 = new THREE.Mesh(extrude,materials)
 
@@ -1264,11 +1263,11 @@ function makePart(part,type){
 		scene.add( foot2WF )
 		scene.add( foot2 )
 
-
 	}
 
 
 	else if(type=="foot2.3"){
+
 		foot2WF = new THREE.LineSegments(geometry,lineMaterial)
 		foot2 = new THREE.Mesh(extrude,materials)
 
@@ -1283,7 +1282,6 @@ function makePart(part,type){
 
 		scene.add( foot2WF )
 		scene.add( foot2 )
-
 
 	}
 
