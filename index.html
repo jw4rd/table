@@ -78,7 +78,7 @@ input[type="checkbox"] {
 
 </head>
 
-<body onResize="draw()">
+<body onload="load()" onResize="draw()">
 
 <!--
 	onResize="window.location=window.location;"
@@ -104,18 +104,6 @@ TABLE<br>
 	<option value="60">60 x 36 x 37.125</option>
 	<option disabled value="custom">custom</option>
 </select><p>
-
-<!--
-&emsp;<select id="size" autocomplete="off">
-	<option selected disabled>size</option>
-</select><p>
--->
-
-<!--
-&emsp;<select id="bird" autocomplete="off">
-	<option selected disabled>select bird</option>
-</select><p>
--->
 
 &emsp;table height<br>
 &emsp;&emsp;<input id='table-height' type="number" value="34.5" step="0.125" autocomplete="off"/><br>
@@ -182,18 +170,12 @@ TABLE<br>
 //
 //
 //shelf 3d
-//shelf pockets
-//check clearance top pockets
-//pics
 //
-//
-//
-
 
 //
 //dogbones
 //fillets
-//gcode & sbp output
+//gcode & sbp
 
 
 document.getElementById('2D').checked=false
@@ -314,7 +296,7 @@ color: 0xeeeeff,
 side: THREE.DoubleSide,
 polygonOffset: true, 
 polygonOffsetFactor: 1
-});
+})
 
 
 var r = 0
@@ -395,7 +377,7 @@ function translate(o,x,y,z){
 function updateAll(){
 
 	while (scene.children.length > 0) {
-            scene.remove(scene.children[scene.children.length - 1])
+		scene.remove(scene.children[scene.children.length - 1])
 	}
 
 	//plane
@@ -494,6 +476,8 @@ function scale(s){
 
 }
 
+
+
 updateAll()
 
 
@@ -523,8 +507,9 @@ function loadParts(){
 		$("#size").val("custom")
 	}
 
-	clearance = 0 //0.002
-	pocketClearance = 0.02 //0.01
+	clearance = -0.02 //0.002
+	clearance2 = -0.02
+	pocketClearance = 0.01 //0.01
 
 	fillet=0.05
 
@@ -680,22 +665,22 @@ function loadParts(){
 
 		tableSupportSide.holes.push([])
 		for(i=n;i>=0;i--){
-			tableSupportSide.holes[tableSupportSide.holes.length-1].push({X:(table.supportWidth/4)+Math.sin(((Math.PI*2)/n*i))*0.15,Y:-((table.depth/2-table.overHang-thickness*2-1))+Math.cos(((Math.PI*2)/n*i))*0.15})
+			tableSupportSide.holes[tableSupportSide.holes.length-1].push({X:-(table.supportWidth/4)+Math.sin(((Math.PI*2)/n*i))*0.15,Y:-((table.depth/2-table.overHang-thickness*2-1))+Math.cos(((Math.PI*2)/n*i))*0.15})
 		}
 
 		tableSupportSide.holes.push([])
 		for(i=n;i>=0;i--){
-			tableSupportSide.holes[tableSupportSide.holes.length-1].push({X:-(table.supportWidth/4)+Math.sin(((Math.PI*2)/n*i))*0.15,Y:-((table.depth/2-table.overHang-thickness*2-table.legWidth+1))+Math.cos(((Math.PI*2)/n*i))*0.15})
+			tableSupportSide.holes[tableSupportSide.holes.length-1].push({X:(table.supportWidth/4)+Math.sin(((Math.PI*2)/n*i))*0.15,Y:-((table.depth/2-table.overHang-thickness*2-table.legWidth+1))+Math.cos(((Math.PI*2)/n*i))*0.15})
 		}
 
 		tableSupportSide.holes.push([])
 		for(i=n;i>=0;i--){
-			tableSupportSide.holes[tableSupportSide.holes.length-1].push({X:(table.supportWidth/4)+Math.sin(((Math.PI*2)/n*i))*0.15,Y:((table.depth/2-table.overHang-thickness*2-1))+Math.cos(((Math.PI*2)/n*i))*0.15})
+			tableSupportSide.holes[tableSupportSide.holes.length-1].push({X:-(table.supportWidth/4)+Math.sin(((Math.PI*2)/n*i))*0.15,Y:((table.depth/2-table.overHang-thickness*2-1))+Math.cos(((Math.PI*2)/n*i))*0.15})
 		}
 
 		tableSupportSide.holes.push([])
 		for(i=n;i>=0;i--){
-			tableSupportSide.holes[tableSupportSide.holes.length-1].push({X:-(table.supportWidth/4)+Math.sin(((Math.PI*2)/n*i))*0.15,Y:((table.depth/2-table.overHang-thickness*2-table.legWidth+1))+Math.cos(((Math.PI*2)/n*i))*0.15})
+			tableSupportSide.holes[tableSupportSide.holes.length-1].push({X:(table.supportWidth/4)+Math.sin(((Math.PI*2)/n*i))*0.15,Y:((table.depth/2-table.overHang-thickness*2-table.legWidth+1))+Math.cos(((Math.PI*2)/n*i))*0.15})
 		}
 
 		//leg1
@@ -756,8 +741,8 @@ function loadParts(){
 
 		tableLeg1.holes[tableLeg1.holes.length-1].push({X:table.legWidth/3,Y:table.height/2-thickness})
 		tableLeg1.holes[tableLeg1.holes.length-1].push({X:table.legWidth/6-clearance,Y:table.height/2-thickness})
-		tableLeg1.holes[tableLeg1.holes.length-1].push({X:table.legWidth/6-clearance,Y:table.height/2-thickness*2-clearance})
-		tableLeg1.holes[tableLeg1.holes.length-1].push({X:table.legWidth/3,Y:table.height/2-thickness*2-clearance})
+		tableLeg1.holes[tableLeg1.holes.length-1].push({X:table.legWidth/6-clearance,Y:table.height/2-thickness*2-clearance2})
+		tableLeg1.holes[tableLeg1.holes.length-1].push({X:table.legWidth/3,Y:table.height/2-thickness*2-clearance2})
 
 		//leg2
 		tableLeg2.cutout.push({X:-table.legWidth/2,Y:table.height/2})
@@ -793,8 +778,8 @@ function loadParts(){
 
 		tableLeg2.holes.push([])
 
-		tableLeg2.holes[tableLeg2.holes.length-1].push({X:-table.legWidth/3,Y:table.height/2-thickness*2-clearance})
-		tableLeg2.holes[tableLeg2.holes.length-1].push({X:-table.legWidth/6+clearance,Y:table.height/2-thickness*2-clearance})
+		tableLeg2.holes[tableLeg2.holes.length-1].push({X:-table.legWidth/3,Y:table.height/2-thickness*2-clearance2})
+		tableLeg2.holes[tableLeg2.holes.length-1].push({X:-table.legWidth/6+clearance,Y:table.height/2-thickness*2-clearance2})
 		tableLeg2.holes[tableLeg2.holes.length-1].push({X:-table.legWidth/6+clearance,Y:table.height/2-thickness})
 		tableLeg2.holes[tableLeg2.holes.length-1].push({X:-table.legWidth/3,Y:table.height/2-thickness})
 
@@ -1301,7 +1286,6 @@ function makePart(part,type){
 		scene.add( foot2WF )
 		scene.add( foot2 )
 
-
 	}
 
 	else if(type=="support1"){
@@ -1379,7 +1363,6 @@ $("#thickness").on('change click',function(){
 	if((thickness<0.6)||(thickness>0.8)){
 		custom=true
 	}
-	
 })
 
 $("#table-height").on('change click',function(){
@@ -1440,6 +1423,7 @@ $("#size").on('change click',function(){
 	updateAll()
 
 })
+
 
 
 		</script>

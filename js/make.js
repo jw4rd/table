@@ -4,29 +4,6 @@ function make(){
 
 		dxf = "0\nSECTION\n2\nENTITIES\n999\nw4rd.com\n0\n"
 
-		//top
-
-		//62 color
-
-		//1 red
-		//2 yellow
-		//3 green
-		//4 cyan
-		//5 blue
-		//6 magenta
-
-		dxf+="TABLES\n0\nTABLE\n2\n"
-
-		//layers
-
-		/*
-
-		dxf+="LAYER\n2\nCUTOUT\n70\n0\n62\n7\n6\n"
-
-		dxf+="ENDTAB\n0\nENDSEC\n0\n"
-
-		*/
-
 		dxf+="POLYLINE\n8\n0\n70\n1\n0\n"
 
 		for(i=0;i<tableTop.cutout.length;i++){
@@ -42,7 +19,7 @@ function make(){
 		
 
 		for(i=0;i<tableTop.pockets.length;i++){
-			dxf+="POLYLINE\n8\n0\n62\n6\n70\n1\n0\n"
+			dxf+="POLYLINE\n8\n0\n70\n1\n0\n"
 			for(j=0;j<tableTop.pockets[i].length;j++){			
 				dxf+="VERTEX\n8\n0\n10\n"
 				dxf+= tableTop.pockets[i][j].X.toFixed(3) + "\n20\n"
@@ -69,7 +46,7 @@ function make(){
 		dxf+="SEQEND\n0\n"
 
 		for(i=0;i<tableSupportFront.holes.length;i++){
-			dxf+="POLYLINE\n8\n0\n62\n5\n70\n1\n0\n"
+			dxf+="POLYLINE\n8\n0\n70\n1\n0\n"
 			for(j=0;j<tableSupportFront.holes[i].length;j++){			
 				dxf+="VERTEX\n8\n0\n10\n"
 				dxf+= tableSupportFront.holes[i][j].X.toFixed(3) + "\n20\n"
@@ -97,7 +74,7 @@ function make(){
 		dxf+="SEQEND\n0\n"
 
 		for(i=0;i<tableSupportSide.holes.length;i++){
-			dxf+="POLYLINE\n8\n0\n62\n5\n70\n1\n0\n"
+			dxf+="POLYLINE\n8\n0\n70\n1\n0\n"
 			for(j=0;j<tableSupportSide.holes[i].length;j++){			
 				dxf+="VERTEX\n8\n0\n10\n"
 				dxf+= (tableSupportSide.holes[i][j].X-(table.width/2+table.supportWidth/2+partSpace)).toFixed(3) + "\n20\n"
@@ -124,7 +101,7 @@ function make(){
 		dxf+="SEQEND\n0\n"
 
 		for(i=0;i<tableLeg1.holes.length;i++){
-			dxf+="POLYLINE\n8\n0\n62\n5\n70\n1\n0\n"
+			dxf+="POLYLINE\n8\n0\n70\n1\n0\n"
 			for(j=0;j<tableLeg1.holes[i].length;j++){			
 				dxf+="VERTEX\n8\n0\n10\n"
 				dxf+= (tableLeg1.holes[i][j].X+(table.width/2+table.legWidth/2+partSpace)).toFixed(3) + "\n20\n"
@@ -151,7 +128,7 @@ function make(){
 		dxf+="SEQEND\n0\n"
 
 		for(i=0;i<tableLeg2.holes.length;i++){
-			dxf+="POLYLINE\n8\n0\n62\n5\n70\n1\n0\n"
+			dxf+="POLYLINE\n8\n0\n70\n1\n0\n"
 			for(j=0;j<tableLeg2.holes[i].length;j++){			
 				dxf+="VERTEX\n8\n0\n10\n"
 				dxf+= (tableLeg2.holes[i][j].X+(table.width/2+table.legWidth*2+partSpace)).toFixed(3) + "\n20\n"
@@ -179,7 +156,7 @@ function make(){
 		dxf+="SEQEND\n0\n"
 		//
 
-		dxf+="POLYLINE\n8\n0\n62\n5\n70\n1\n0\n"
+		dxf+="POLYLINE\n8\n0\n70\n1\n0\n"
 		for(i=0;i<tableFoot1.holes[0].length;i++){
 			dxf+="VERTEX\n8\n0\n10\n"
 			dxf+= (tableFoot1.holes[0][i].X+(table.width/2+table.legWidth/2+partSpace)).toFixed(3) + "\n20\n"
@@ -204,7 +181,7 @@ function make(){
 		dxf+= (tableFoot2.cutout[0].Y-(table.depth/2+table.supportWidth/2+partSpace+thickness/2)).toFixed(3) + "\n0\n"
 		dxf+="SEQEND\n0\n"
 
-		dxf+="POLYLINE\n8\n0\n62\n5\n70\n1\n0\n"
+		dxf+="POLYLINE\n8\n0\n70\n1\n0\n"
 		for(i=0;i<tableFoot2.holes[0].length;i++){
 			dxf+="VERTEX\n8\n0\n10\n"
 			dxf+= (tableFoot2.holes[0][i].X+(table.width/2+table.legWidth*2+partSpace)).toFixed(3) + "\n20\n"
@@ -217,7 +194,7 @@ function make(){
 		dxf+="SEQEND\n0\n"
 
 		//pockets
-		dxf+="POLYLINE\n8\n0\n62\n1\n70\n1\n0\n"
+		dxf+="POLYLINE\n8\n0\n70\n1\n0\n"
 		for(i=0;i<tableFoot2.pockets.length;i++){
 			dxf+="VERTEX\n8\n0\n10\n"
 			dxf+= (tableFoot2.pockets[i].X+(table.width/2+table.legWidth*2+partSpace)).toFixed(3) + "\n20\n"
@@ -231,8 +208,8 @@ function make(){
 
 		//shelf
 
-
-		dxf+="POLYLINE\n8\n0\n62\n0\n70\n1\n0\n"	
+		
+		dxf+="POLYLINE\n8\n0\n70\n1\n0\n"	
 
 		for(i=0;i<tableShelf.cutout.length;i++){
 
@@ -247,9 +224,7 @@ function make(){
 
 		dxf+="SEQEND\n0\n"
 
-
-
-		dxf+="POLYLINE\n8\n0\n62\n0\n70\n1\n0\n"	
+		dxf+="POLYLINE\n8\n0\n70\n1\n0\n"	
 
 		for(i=0;i<tableShelfBlock.cutout.length;i++){
 
@@ -264,7 +239,7 @@ function make(){
 
 		dxf+="SEQEND\n0\n"
 
-		dxf+="POLYLINE\n8\n0\n62\n0\n70\n1\n0\n"	
+		dxf+="POLYLINE\n8\n0\n70\n1\n0\n"	
 
 		for(i=0;i<tableShelfBlock.holes[0].length;i++){
 
@@ -278,8 +253,6 @@ function make(){
 		dxf+= tableShelfBlock.holes[0][0].Y+table.depth/2+2 + "\n0\n"
 
 		dxf+="SEQEND\n0\n"
-
-
 
 		//end
 		dxf+="ENDSEC\n0\nEOF"
