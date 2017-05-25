@@ -78,7 +78,7 @@ input[type="checkbox"] {
 
 </head>
 
-<body onload="load()" onResize="draw()">
+<body onResize="draw()">
 
 <!--
 	onResize="window.location=window.location;"
@@ -100,8 +100,9 @@ input[type="checkbox"] {
 TABLE<br>
 
 &emsp;<select id="size" autocomplete="off">
-	<option selected value="36">36 x 36 x 37.125</option>
+	<option value="36">36 x 36 x 37.125</option>
 	<option value="60">60 x 36 x 37.125</option>
+	<option selected value="30">36 x 30 x 36</option>
 	<option disabled value="custom">custom</option>
 </select><p>
 
@@ -136,10 +137,10 @@ TABLE<br>
 &emsp;&emsp;<a title="4 per table (for casters)" href="https://www.mcmaster.com/#92141A031">washers 3/8"</a><br>
 
 <div id="notes">
-&emsp;note:<br>
+&emsp;notes:<br>
 &emsp;&emsp;height does not include caster height (2-3/4")<br>
-
-
+&emsp;&emsp;dxf does not yet include dogbone fillets<br>
+&emsp;&emsp;tool: 1/4" 2-flute upcut, 1/4" cut depth, 1.5"/sec<br>
 </div>
 
 </div>
@@ -176,6 +177,16 @@ TABLE<br>
 //dogbones
 //fillets
 //gcode & sbp
+
+table=table30
+
+$("#table-height").val(table.height)
+$("#table-width").val(table.width)
+$("#table-depth").val(table.depth)
+$("#leg-width").val(table.legWidth)
+$("#radius").val(table.topRadius)
+$("#overhang").val(table.overHang)
+$("#thickness").val(table.thickness)
 
 
 document.getElementById('2D').checked=false
@@ -507,7 +518,7 @@ function loadParts(){
 		$("#size").val("custom")
 	}
 
-	clearance = -0.02 //0.002
+	clearance = -0.015 //0.002
 	clearance2 = -0.02
 	pocketClearance = 0.01 //0.01
 
@@ -718,8 +729,6 @@ function loadParts(){
 		for(i=n;i>=0;i--){
 			tableLeg1.holes[tableLeg1.holes.length-1].push({X:(table.legWidth/4)+Math.sin(((Math.PI*2)/n*i))*0.15,Y:(table.height/2-thickness*2-1)+Math.cos(((Math.PI*2)/n*i))*0.15})
 		}
-
-
 			tableLeg1.holes.push([])
 			for(j=n;j>=0;j--){
 				tableLeg1.holes[tableLeg1.holes.length-1].push({X:(table.legWidth/4)+Math.sin(((Math.PI*2)/n*j))*0.15,Y:(0)+Math.cos(((Math.PI*2)/n*j))*0.15})
@@ -1373,7 +1382,7 @@ $("#table-height").on('change click',function(){
 
 $("#table-width").on('change click',function(){
 	table.width = parseFloat($(this).val())
-	custom=true
+	custom=trueable
 	updateAll()
 })
 
@@ -1407,12 +1416,20 @@ $("#size").on('change click',function(){
 	if($(this).val()=="36"){
 		table=table36
 		custom=false
+		thickness = table.thickness
 	}
 	else if($(this).val()=="60"){
 		table=table60
+		thickness = table.thickness
 		custom=false
 	}
+	else if($(this).val()=="30"){
+		table=table30
+		custom=false
+		thickness = table.thickness
+	}
 
+	$("#thickness").val(thickness)
 	$("#table-height").val(table.height)
 	$("#table-width").val(table.width)
 	$("#table-depth").val(table.depth)
