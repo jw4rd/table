@@ -69,9 +69,17 @@ input[type="checkbox"] {
 }
 
 
-#code{
-
+#pp{
+	position:absolute;
+	right:110px;
+	bottom:15px;
 }
+
+#db{
+  width: 100px;
+  height: auto;
+}
+
 
 </style>
 
@@ -87,6 +95,8 @@ input[type="checkbox"] {
 <script src="js/libs/jquery-3.1.1.min.js"></script>
 <script src="js/libs/jquery.mousewheel.min.js"></script>
 <script src="js/libs/three.js"></script>
+<script src="js/libs/STLBinaryExporter.js"></script>
+
 
 <script src="js/table.js"></script>
 <script src="js/draw.js"></script>
@@ -103,6 +113,7 @@ TABLE<br>
 	<option value="36">36 x 36 x 37.125</option>
 	<option value="60">60 x 36 x 37.125</option>
 	<option selected value="30">36 x 30 x 36</option>
+	<option value="30x60">60 x 30 x 36</option>
 	<option disabled value="custom">custom</option>
 </select><p>
 
@@ -129,10 +140,10 @@ TABLE<br>
 
 <p>
 &emsp;BOM<br>
-&emsp;&emsp;<a title="16 per table 4 per shelf" href="https://www.mcmaster.com/#90910A543">screws</a><br>
-&emsp;&emsp;<a title="16 per table 4 per shelf" href="https://www.mcmaster.com/#91090A108">washers 1/4"</a><br>
-&emsp;&emsp;<a title="16 per table 4 per shelf" href="https://www.mcmaster.com/#90975A029">threaded inserts</a><br>
-&emsp;&emsp;<a title="4 per table" href="https://www.mcmaster.com/#24025T64">casters</a><br>
+&emsp;&emsp;<a title="16 per table, 4 per shelf" href="https://www.mcmaster.com/#90910A543">screws</a><br>
+&emsp;&emsp;<a title="16 per table, 4 per shelf" href="https://www.mcmaster.com/#91090A108">washers 1/4"</a><br>
+&emsp;&emsp;<a title="16 per table, 4 per shelf" href="https://www.mcmaster.com/#90975A029">threaded inserts</a><br>
+&emsp;&emsp;<a title="4 per table" href="https://www.mcmaster.com/#24025T66">casters</a><br>
 &emsp;&emsp;<a title="4 per table (for casters)" href="https://www.mcmaster.com/#95462A031">nuts 3/8"</a><br>
 &emsp;&emsp;<a title="4 per table (for casters)" href="https://www.mcmaster.com/#92141A031">washers 3/8"</a><br>
 
@@ -160,11 +171,21 @@ TABLE<br>
 
 <div id='make'>
 	<a href="#" id="downloadLink"></a>
-	<input class="button" type="submit" value="make" style="height:80px;" onclick="make()"/><p>
+	<input class="button" type="submit" value="make" style="height:80px;" onclick="exportStl()"/><p>
 </div>
 
-<script>
 
+<div id="pp">
+	<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+	<input type="hidden" name="cmd" value="_s-xclick">
+	<input type="hidden" name="hosted_button_id" value="8ED69W882F9PC">
+	<input id="db" type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+	<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+	</form>
+</div>
+
+
+<script>
 
 //TODO
 //
@@ -518,9 +539,11 @@ function loadParts(){
 		$("#size").val("custom")
 	}
 
-	clearance = -0.015 //0.002
-	clearance2 = -0.02
-	pocketClearance = 0.01 //0.01
+	
+	clearance = 0.002	//top supports
+	clearance2 = 0.001 //holes
+	clerance3 = 0 //legs
+	pocketClearance = 0.025 //0.01
 
 	fillet=0.05
 
@@ -531,7 +554,6 @@ function loadParts(){
 	tableLeg2={cutout:[],holes:[],pockets:[]}
 	tableFoot1={cutout:[],holes:[],pockets:[]}
 	tableFoot2={cutout:[],holes:[],pockets:[]}
-
 
 	tableShelf={cutout:[],holes:[],pockets:[]}
 	tableShelfBlock={cutout:[],holes:[],pockets:[]}
@@ -664,12 +686,12 @@ function loadParts(){
 
 		for(i=1;i<5;i++){
 			if(i%2==1){
-				tableSupportSide.cutout.push({X:-table.supportWidth/2-thickness/2,Y:(-table.depth/2+table.overHang+thickness)+(table.depth-(table.overHang*2)-thickness*2)*(i/5)})
-				tableSupportSide.cutout.push({X:-table.supportWidth/2,Y:(-table.depth/2+table.overHang+thickness)+(table.depth-(table.overHang*2)-thickness*2)*(i/5)})
+				tableSupportSide.cutout.push({X:-table.supportWidth/2-thickness/2,Y:(-table.depth/2+table.overHang+thickness)+(table.depth-(table.overHang*2)-thickness*2)*(i/5)-clearance})
+				tableSupportSide.cutout.push({X:-table.supportWidth/2,Y:(-table.depth/2+table.overHang+thickness)+(table.depth-(table.overHang*2)-thickness*2)*(i/5)-clearance})
 			}
 			else{
-				tableSupportSide.cutout.push({X:-table.supportWidth/2,Y:(-table.depth/2+table.overHang+thickness)+(table.depth-(table.overHang*2)-thickness*2)*(i/5)})
-				tableSupportSide.cutout.push({X:-table.supportWidth/2-thickness/2,Y:(-table.depth/2+table.overHang+thickness)+(table.depth-(table.overHang*2)-thickness*2)*(i/5)})
+				tableSupportSide.cutout.push({X:-table.supportWidth/2,Y:(-table.depth/2+table.overHang+thickness)+(table.depth-(table.overHang*2)-thickness*2)*(i/5)+clearance})
+				tableSupportSide.cutout.push({X:-table.supportWidth/2-thickness/2,Y:(-table.depth/2+table.overHang+thickness)+(table.depth-(table.overHang*2)-thickness*2)*(i/5)+clearance})
 			}
 		}
 
@@ -1428,6 +1450,11 @@ $("#size").on('change click',function(){
 		custom=false
 		thickness = table.thickness
 	}
+	else if($(this).val()=="30x60"){
+		table=table30x60
+		custom=false
+		thickness = table.thickness
+	}
 
 	$("#thickness").val(thickness)
 	$("#table-height").val(table.height)
@@ -1441,8 +1468,49 @@ $("#size").on('change click',function(){
 
 })
 
+function exportStl(){
+
+	//console.log("stl")
+	stl = new THREE.STLBinaryExporter()
+
+	//console.log(stl.parse(scene))
+
+	stlA = stl.parse(scene)
+	console.log(stlA.buffer)
+	
+	_arrayBufferToBase64(stlA.buffer)
+
+
+}
+
+function _arrayBufferToBase64(buffer){
+
+
+	//console.log(buffer)
+	var binary = ''
+	var bytes = new Uint8Array(buffer)
+	var len = bytes.byteLength
+
+	console.log(len)	
+
+	for(i=0;i<len;i++){
+		binary += String.fromCharCode(bytes[i])
+	}
+	
+	//console.log(window.btoa(binary))
+	//console.log(binary)
+
+
+	var link = document.getElementById("downloadLink")
+
+	link.setAttribute("href", "data:text/plain;base64," + btoa(binary))
+	link.setAttribute("download", "table.stl")
+	link.click()
+
+}
+
 
 
 		</script>
-	</body>
+	</body>	
 </html>

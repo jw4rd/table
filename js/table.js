@@ -34,12 +34,23 @@ var table60 = {
 var table30 = {
 	width: 36,
 	depth: 30,
-	height: 33.25,
+	height: 33.125,
 	topRadius:0.75,
 	overHang:1.5,
 	supportWidth:3,
 	legWidth:4.375,
-	thickness:0.5
+	thickness:0.475
+}
+
+var table30x60 = {
+	width: 60,
+	depth: 30,
+	height: 33.125,
+	topRadius:0.75,
+	overHang:1.5,
+	supportWidth:3,
+	legWidth:4.375,
+	thickness:0.475
 }
 
 
