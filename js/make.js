@@ -4,7 +4,7 @@ function make(){
 
 		dxf = "0\nSECTION\n2\nENTITIES\n999\nw4rd.com\n0\n"
 
-		dxf+="POLYLINE\n8\ntop\n62\n4\n70\n1\n0\n"
+		dxf+="POLYLINE\n8\ntop\n62\n1\n70\n1\n0\n"
 
 		for(i=0;i<tableTop.cutout.length;i++){
 			dxf+="VERTEX\n10\n"
@@ -19,7 +19,7 @@ function make(){
 		
 
 		for(i=0;i<tableTop.pockets.length;i++){
-			dxf+="POLYLINE\n8\npocket\n70\n1\n0\n"
+			dxf+="POLYLINE\n8\npocket\n62\n12\n70\n1\n0\n"
 			for(j=0;j<tableTop.pockets[i].length;j++){			
 				dxf+="VERTEX\n10\n"
 				dxf+= tableTop.pockets[i][j].X.toFixed(3) + "\n20\n"
