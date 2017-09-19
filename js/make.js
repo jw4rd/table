@@ -4,29 +4,29 @@ function make(){
 
 		dxf = "0\nSECTION\n2\nENTITIES\n999\nw4rd.com\n0\n"
 
-		dxf+="POLYLINE\n8\n0\n70\n1\n0\n"
+		dxf+="POLYLINE\n8\ntop\n62\n4\n70\n1\n0\n"
 
 		for(i=0;i<tableTop.cutout.length;i++){
-			dxf+="VERTEX\n8\n0\n10\n"
+			dxf+="VERTEX\n10\n"
 			dxf+= tableTop.cutout[i].X.toFixed(3) + "\n20\n"
 			dxf+= tableTop.cutout[i].Y.toFixed(3) + "\n0\n"
 		}
 
-		dxf+="VERTEX\n8\n0\n10\n"
+		dxf+="VERTEX\n10\n"
 		dxf+= tableTop.cutout[0].X.toFixed(3) + "\n20\n"
 		dxf+= tableTop.cutout[0].Y.toFixed(3) + "\n0\n"
 		dxf+="SEQEND\n0\n"
 		
 
 		for(i=0;i<tableTop.pockets.length;i++){
-			dxf+="POLYLINE\n8\n0\n70\n1\n0\n"
+			dxf+="POLYLINE\n8\npocket\n70\n1\n0\n"
 			for(j=0;j<tableTop.pockets[i].length;j++){			
-				dxf+="VERTEX\n8\n0\n10\n"
+				dxf+="VERTEX\n10\n"
 				dxf+= tableTop.pockets[i][j].X.toFixed(3) + "\n20\n"
 				dxf+= tableTop.pockets[i][j].Y.toFixed(3) + "\n0\n"
 			}
 
-			dxf+="VERTEX\n8\n0\n10\n"
+			dxf+="VERTEX\n10\n"
 			dxf+= tableTop.pockets[i][0].X.toFixed(3) + "\n20\n"
 			dxf+= tableTop.pockets[i][0].Y.toFixed(3) + "\n0\n"
 			dxf+="SEQEND\n0\n"
