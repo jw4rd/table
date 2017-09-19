@@ -173,7 +173,7 @@ TABLE<br>
 
 <div id='make'>
 	<a href="#" id="downloadLink"></a>
-	<input class="button" type="submit" value="make" style="height:80px;" onclick="exportStl()"/><p>
+	<input class="button" type="submit" value="make" style="height:80px;" onclick="make()"/><p>
 </div>
 
 
@@ -1469,47 +1469,6 @@ $("#size").on('change click',function(){
 	updateAll()
 
 })
-
-function exportStl(){
-
-	//console.log("stl")
-	stl = new THREE.STLBinaryExporter()
-
-	//console.log(stl.parse(scene))
-
-	stlA = stl.parse(scene)
-	console.log(stlA.buffer)
-	
-	_arrayBufferToBase64(stlA.buffer)
-
-
-}
-
-function _arrayBufferToBase64(buffer){
-
-
-	//console.log(buffer)
-	var binary = ''
-	var bytes = new Uint8Array(buffer)
-	var len = bytes.byteLength
-
-	console.log(len)	
-
-	for(i=0;i<len;i++){
-		binary += String.fromCharCode(bytes[i])
-	}
-	
-	//console.log(window.btoa(binary))
-	//console.log(binary)
-
-
-	var link = document.getElementById("downloadLink")
-
-	link.setAttribute("href", "data:text/plain;base64," + btoa(binary))
-	link.setAttribute("download", "table.stl")
-	link.click()
-
-}
 
 
 
