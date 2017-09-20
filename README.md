@@ -1,7 +1,7 @@
 [DEMO](http://jw4rd.github.io/table)   
 
 
-![table](https://raw.github.com/jw4rd/table/master/img/table01.png)  
+![table](https://raw.github.com/jw4rd/table/master/img/table01.jpg)  
 
 &copy; 2017 Incite Focus  
 
