@@ -159,7 +159,7 @@ TABLE<br>
 &emsp;&emsp;dxf does not yet include dogbone fillets<br>
 &emsp;&emsp;tool: 1/4" 2-flute upcut, 1/4" cut depth, 1.5"/sec<br>
 &emsp;&emsp;pocket interior shapes of table top<br>
-&emsp;&emsp;shelf parts included in dxf<br>
+
 </div>
 
 </div>
@@ -203,9 +203,6 @@ TABLE<br>
 //TODO
 //
 //
-//
-//shelf 3d
-//
 
 //
 //dogbones
@@ -224,7 +221,7 @@ $("#thickness").val(table.thickness)
 
 
 document.getElementById('2D').checked=false
-//document.getElementById('shelf').checked=false
+document.getElementById('shelf').checked=false
 
 
 var scene = new THREE.Scene() 
@@ -897,6 +894,13 @@ function loadParts(){
 		tableShelf.cutout.push({X:(table.width/2)-table.overHang-(thickness*2),Y:(table.depth/2)-table.overHang-(thickness*2)})
 		tableShelf.cutout.push({X:(table.width/2)-table.overHang-(thickness*2),Y:-(table.depth/2)+table.overHang+(thickness*2)})
 
+		//pocket shelf blocks
+		//tableShelf.pockets.push([])
+		//tableShelf.pockets[tableShelf.pockets.length-1].push({X:-1,Y:1})
+		//tableShelf.pockets[tableShelf.pockets.length-1].push({X:1,Y:1})
+		//tableShelf.pockets[tableShelf.pockets.length-1].push({X:1,Y:-1})
+		//tableShelf.pockets[tableShelf.pockets.length-1].push({X:-1,Y:-1})		
+		//console.log(tableShelf)
 
 		tableShelfBlock.cutout.push({X:-table.legWidth/4,Y:-1})
 		tableShelfBlock.cutout.push({X:-table.legWidth/4,Y:1})
@@ -924,25 +928,20 @@ function loadParts(){
 	makePart(tableLeg2,"leg2.3")
 	makePart(tableLeg2,"leg2.4")
 
-
-
 	makePart(tableFoot1,"foot1")
 	makePart(tableFoot1,"foot1.2")
 	makePart(tableFoot1,"foot1.3")
 	makePart(tableFoot1,"foot1.4")
-
 
 	makePart(tableFoot2,"foot2")
 	makePart(tableFoot2,"foot2.2")
 	makePart(tableFoot2,"foot2.3")
 	makePart(tableFoot2,"foot2.4")
 
-
 	makePart(tableSupportFront,"support1")
 	makePart(tableSupportFront,"support1-b")
 	makePart(tableSupportSide,"support2")
 	makePart(tableSupportSide,"support2-l")
-
 
 	makePart(tableShelf,"shelf")
 
@@ -1538,7 +1537,7 @@ function makePart(part,type){
 
 	}
 	else{
-		console.log(type)
+		//console.log(type)
 	}
 
 
